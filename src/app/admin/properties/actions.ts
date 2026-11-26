@@ -22,6 +22,9 @@ export async function changeStatus(form:FormData){
 }
 export async function mediaVisibility(form:FormData){
  const u=await requireRole("owner");const id=String(form.get("id")||""),pid=String(form.get("property")||"");if(!uuid.safeParse(id).success||!uuid.safeParse(pid).success)redirect("/admin/properties");
- await db().query("UPDATE property_media SET visible=$4 WHERE organization_id=$1 AND property_id=$2 AND id=$3 AND generation_job_id IS NULL AND (NOT $4 OR approval_status='approved')",[u.organization_id,pid,id,form.get("visible")==="true"]);
+ await db().query("UPDATE property_media SET visible=$4 WHERE organization_id=$1 AND property_id=$2 AND id=$3 AND archived_at IS NULL AND generation_job_id IS NULL AND (NOT $4 OR approval_status='approved')",[u.organization_id,pid,id,form.get("visible")==="true"]);
  revalidatePath("/");revalidatePath("/properties");redirect("/admin/properties/"+pid);
 }
+
+export async function editMedia(f:FormData){const u=await requireRole("owner"),pid=String(f.get("property")||""),id=String(f.get("id")||""),title=String(f.get("title")||"").trim(),order=Number(f.get("order"));if(![pid,id].every(v=>uuid.safeParse(v).success))redirect("/admin/properties");if(!title||title.length>120||!Number.isInteger(order)||order<0||order>10000)redirect("/admin/properties/"+pid+"?error=media");await db().query("UPDATE property_media SET title=$4,sort_order=$5 WHERE organization_id=$1 AND property_id=$2 AND id=$3",[u.organization_id,pid,id,title,order]);revalidatePath("/");redirect("/admin/properties/"+pid);}
+export async function archiveMedia(f:FormData){const u=await requireRole("owner"),pid=String(f.get("property")||""),id=String(f.get("id")||""),restore=f.get("restore")==="yes";if(![pid,id].every(v=>uuid.safeParse(v).success))redirect("/admin/properties");const result=await db().query("UPDATE property_media SET visible=false,archived_at=CASE WHEN $4::boolean THEN NULL ELSE now() END WHERE organization_id=$1 AND property_id=$2 AND id=$3 AND generation_job_id IS NULL",[u.organization_id,pid,id,restore]);revalidatePath("/");revalidatePath("/properties");redirect("/admin/properties/"+pid+(result.rowCount?"":"?error=media"));}
