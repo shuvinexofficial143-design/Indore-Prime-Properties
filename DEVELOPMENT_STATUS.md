@@ -1,13 +1,9 @@
 # Development status
-Current phase: 0 — repository and architecture
-Status: Implemented scaffold; build and browser verification pending.
-- Repository initialized; strict TypeScript, Next.js App Router, Tailwind, responsive starter screen, about and liveness routes, noindex defaults.
-- Scaffold and HTTP smoke test source added; dependency installation, typecheck, production build and runtime smoke tests must be verified before marking Phase 0 Tested.
-- Database: planned, not connected. No migrations applied.
-- 3D viewer and AI: not started. No external credentials configured.
-- Deployment: not started; preview planned in Phase 1.
-- Pending: lockfile generation and verified build, then Phase 1 premium public site.
-- Phases 1–14: Not Started.
-- Blocker: local environment has no network access to npm; use authorized CI or a connected build environment.
-- Required credentials later: dedicated Neon database and authentication secret; optional storage and external providers only when authorized.
-Last commit: see git log (avoid self-referential SHA).
+Current phase: 0 validation / Phase 1 preview implementation.
+- Phase 0 scaffold implemented; runtime verification pending. npm registry DNS unavailable in local environment. Next 16.4.6 existence confirmed from npm package listing.
+- Phase 1 preview: responsive public homepage, navigation, featured/luxury/affordable/commercial categories, ten localities, searchable catalog of eight fictional illustrative records, detail pages, contact placeholder explicitly unconfigured. Original SVG concepts, not photographs. Actual photography, database-backed listings, real contact, booking, 3D, tours and PWA pending.
+- Vercel preview blocked: create project returned 403 forbidden in Avanti Verse team. No production deployment.
+- Neon and authentication not started; no migrations or secrets.
+- Test source added for filters, data and HTTP paths. CI and actual browser verification pending. Do not mark phase Tested before results.
+- Next: resolve build/preview permission; browser checks at requested widths; approved architecture photography; then Phase 2.
+- All later phases not started. No paid API enabled.
