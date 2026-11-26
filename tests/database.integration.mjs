@@ -3,7 +3,7 @@ if(!process.env.DATABASE_URL||process.env.TEST_DATABASE_ONLY!=="1")throw new Err
 const pool=db();after(()=>pool.end());
 test("migrations, seed, tenant-scoped property reads and session lifecycle",async()=>{
  const org=(await pool.query("SELECT id FROM organizations WHERE slug='indore-prime-demo'")).rows[0].id;
- assert.equal((await pool.query("SELECT count(*)::int AS n FROM properties WHERE organization_id=$1",[org])).rows[0].n,8);
+ assert.equal((await pool.query("SELECT count(*)::int AS n FROM properties WHERE organization_id=$1",[org])).rows[0].n,26);
  const other=(await pool.query("INSERT INTO organizations(slug,name) VALUES('test-isolated','Isolated test') RETURNING id")).rows[0].id;
  assert.equal((await pool.query("SELECT count(*)::int AS n FROM properties WHERE organization_id=$1",[other])).rows[0].n,0);
  for(const role of ["owner","agent","customer"]){const email=role+"@example.invalid";await pool.query("INSERT INTO users(organization_id,email,password_hash,role) VALUES($1,$2,$3,$4)",[org,email,await hashPassword("disposable-test-password"),role]);assert.equal((await authenticate(email,"wrong-password")).status,"invalid");const login=await authenticate(email,"disposable-test-password");assert.equal(login.status,"ok");assert.equal((await sessionUser(login.token)).role,role);assert.equal((await sessionUser(login.token)).organization_id,org);await revokeSession(login.token);assert.equal(await sessionUser(login.token),null);}

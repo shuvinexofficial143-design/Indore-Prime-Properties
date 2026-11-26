@@ -1,0 +1,2 @@
+import Link from "next/link";import {requireRole} from "@/lib/auth";import {Dashboard} from "@/components/dashboard";import {PropertyForm} from "@/components/property-form";
+export default async function Page({searchParams}:{searchParams:Promise<{error?:string}>}){const u=await requireRole("owner");const {error}=await searchParams;return <Dashboard user={u} title="Add property"><Link href="/admin/properties" className="text-link">← Property management</Link>{error&&<p role="alert" className="notice">Check all fields; the slug must be unique.</p>}<PropertyForm/></Dashboard>}

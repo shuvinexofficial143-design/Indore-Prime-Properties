@@ -1,2 +1,2 @@
 # Media assets
-Phase 1: four original SVG architectural concept illustrations created for this demo, no third-party photos or 3D files. These are not property photographs, floor plans or interactive 3D. Replace or supplement with properly licensed architecture photographs in a later revision, recording attribution and commercial-use terms.
+Original SVG architecture concept illustrations from phase 1; original procedural Three.js villa geometry and analytic equirectangular concept renders added in phase 5/6. No third-party photos or scans; assets are not professionally verified. Owner must verify rights and consent before publishing any uploaded media. No actual property is offered.

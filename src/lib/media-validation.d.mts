@@ -1,0 +1,1 @@
+export const MAX_MEDIA:number;export function checkMedia(kind:string,bytes:Uint8Array):string;

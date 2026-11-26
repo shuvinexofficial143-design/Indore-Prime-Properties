@@ -1,0 +1,1 @@
+export function calculateEmi(price:number,down:number,annual:number,years:number):{principal:number;monthly:number;total:number;interest:number}|null;

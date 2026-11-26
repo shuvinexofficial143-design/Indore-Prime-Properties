@@ -1,0 +1,2 @@
+import {Header,Footer} from "@/components/site";import {EmiCalculator} from "@/components/emi-calculator";
+export default async function Page({searchParams}:{searchParams:Promise<{price?:string}>}){const {price}=await searchParams;const n=Number(price);return <><Header/><main className="section"><p className="eyebrow">AFFORDABILITY</p><h1>Plan your home loan</h1><EmiCalculator initial={Number.isFinite(n)&&n>=100000&&n<=100000000?n:6000000}/></main><Footer/></>}
