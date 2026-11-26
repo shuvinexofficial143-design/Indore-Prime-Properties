@@ -1,5 +1,15 @@
 # Indore Prime Properties
+A fictional portfolio demo by Shuvi 360. No actual properties are offered for sale or rent.
 
-A fictional real-estate portfolio demo by Shuvi 360. No actual properties are offered for sale or rent.
+## Local development
+Node.js 22 LTS and npm required.
+```sh
+npm install
+npm run dev
+npm run test
+npm run typecheck
+npm run build
+```
+Open http://localhost:3000. The health endpoint is /api/health. It reports application liveness only, not database readiness.
 
-Development begins with Phase 0. See DEVELOPMENT_STATUS.md as the scaffold is added.
+See PROJECT_SPEC.md and DEVELOPMENT_STATUS.md for scope and verification. Do not use real customer data in the demo. Keep secrets in environment variables and never commit .env.local.

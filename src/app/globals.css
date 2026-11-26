@@ -1,0 +1,6 @@
+@import "tailwindcss";
+:root { --forest: #123c34; --ivory: #f7f4ed; --gold: #bd985d; --ink: #1e302c; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--ivory); color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
+a { color: inherit; }
