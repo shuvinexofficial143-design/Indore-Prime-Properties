@@ -3,7 +3,7 @@ import {uuid} from "./property-input.mjs";
 export async function publicTour(id){
  if(!uuid.safeParse(id).success)return {scenes:[],hotspots:[]};
  const conn=db();
- const scenes=(await conn.query(`SELECT m.id,m.title FROM property_media m JOIN properties p ON p.id=m.property_id AND p.organization_id=m.organization_id JOIN organizations o ON o.id=p.organization_id WHERE p.id=$1 AND p.status='published' AND p.is_demo AND o.is_demo AND o.slug='indore-prime-demo' AND m.kind='panorama' AND m.visible ORDER BY m.sort_order,m.created_at,m.id`,[id])).rows.map(m=>({...m,url:"/api/media/"+m.id}));
+ const scenes=(await conn.query(`SELECT m.id,m.title,m.source_type,m.ai_generated FROM property_media m JOIN properties p ON p.id=m.property_id AND p.organization_id=m.organization_id JOIN organizations o ON o.id=p.organization_id WHERE p.id=$1 AND p.status='published' AND p.is_demo AND o.is_demo AND o.slug='indore-prime-demo' AND m.kind='panorama' AND m.visible AND m.approval_status='approved' ORDER BY m.sort_order,m.created_at,m.id`,[id])).rows.map(m=>({id:m.id,title:m.title+(m.ai_generated?" · AI preview":m.source_type!=="original"?" · Concept":""),url:"/api/media/"+m.id}));
  const ids=scenes.map(s=>s.id);if(!ids.length)return {scenes,hotspots:[]};
  const hotspots=(await conn.query("SELECT source_id AS source,target_id AS target,label,yaw::float8,pitch::float8 FROM panorama_hotspots WHERE property_id=$1 AND source_id=ANY($2::uuid[]) AND target_id=ANY($2::uuid[])",[id,ids])).rows;
  return {scenes,hotspots};

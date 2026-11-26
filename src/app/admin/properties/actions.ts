@@ -22,6 +22,6 @@ export async function changeStatus(form:FormData){
 }
 export async function mediaVisibility(form:FormData){
  const u=await requireRole("owner");const id=String(form.get("id")||""),pid=String(form.get("property")||"");if(!uuid.safeParse(id).success||!uuid.safeParse(pid).success)redirect("/admin/properties");
- await db().query("UPDATE property_media SET visible=$4 WHERE organization_id=$1 AND property_id=$2 AND id=$3",[u.organization_id,pid,id,form.get("visible")==="true"]);
+ await db().query("UPDATE property_media SET visible=$4 WHERE organization_id=$1 AND property_id=$2 AND id=$3 AND generation_job_id IS NULL AND (NOT $4 OR approval_status='approved')",[u.organization_id,pid,id,form.get("visible")==="true"]);
  revalidatePath("/");revalidatePath("/properties");redirect("/admin/properties/"+pid);
 }

@@ -1,0 +1,2 @@
+import type {MetadataRoute} from "next";
+export default function manifest():MetadataRoute.Manifest{return {name:"Indore Prime Properties · Demo",short_name:"Indore Prime",description:"Shuvi 360 fictional real estate demonstration",start_url:"/",scope:"/",display:"standalone",background_color:"#f7f4ed",theme_color:"#123c34",icons:[{src:"/app-icon/192",sizes:"192x192",type:"image/png",purpose:"any"},{src:"/app-icon/512",sizes:"512x512",type:"image/png",purpose:"any"}]};}

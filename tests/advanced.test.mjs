@@ -1,0 +1,3 @@
+import {test} from "node:test";import assert from "node:assert/strict";import {csvCell,reportDays} from "../src/lib/report-store.mjs";import {brandingInput,defaultBrand} from "../src/lib/branding-store.mjs";
+test("report export formula injection and date bounds",()=>{assert.equal(csvCell("=1+1"),"\"'=1+1\"");assert.equal(csvCell('a"b'),'"a""b"');assert.equal(reportDays("999"),30);assert.equal(reportDays("7"),7);});
+test("brand theme validates text and color safely",()=>{assert.ok(brandingInput.safeParse(defaultBrand).success);assert.equal(brandingInput.safeParse({...defaultBrand,primary:"url(javascript:alert(1))"}).success,false);});

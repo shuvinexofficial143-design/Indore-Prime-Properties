@@ -21,3 +21,16 @@ test("demo enquiry deduplication, assignment, followup and visit conflict",async
  const a=await publicSubmit(p,{time,visitors:2},customer);assert.equal(a.status,"ok");assert.equal((await receipt(a.token)).status,"requested");const b=await publicSubmit({...p,phone:"0000000002",name:"Other Demo"},{time,visitors:1},customer);assert.equal(b.status,"ok");
  const all=await visits(owner);const first=all.find(v=>v.customer_name==="Integration Demo"),second=all.find(v=>v.customer_name==="Other Demo");assert.equal(await updateVisit(owner,first.id,"confirmed",agent.id,""),"ok");assert.equal(await updateVisit(owner,second.id,"confirmed",agent.id,""),"conflict");assert.equal((await receipt(a.token)).status,"confirmed");assert.equal((await visits(customer)).length,2);assert.ok((await notifications(customer)).length>0);
 });
+
+import {studioJobs,createManualJob,reviewJob} from "../src/lib/studio-store.mjs";import {enquiryReceipt} from "../src/lib/crm-store.mjs";
+test("manual studio review and verified enquiry receipt",async()=>{
+ const org=(await pool.query("SELECT id FROM organizations WHERE slug='indore-prime-demo'")).rows[0].id;
+ const owner={...(await pool.query("SELECT id,email,role,organization_id FROM users WHERE organization_id=$1 AND role='owner'",[org])).rows[0],organization_name:"Test"};
+ const pid=(await pool.query("SELECT id FROM properties WHERE organization_id=$1 AND slug='emerald-villa'",[org])).rows[0].id;
+ const asset=(await pool.query("INSERT INTO property_media(organization_id,property_id,kind,mime,storage_key,bytes,title) VALUES($1,$2,'model','model/gltf-binary','test-only-no-object',100,'Test model') RETURNING id",[org,pid])).rows[0].id;
+ const job=await createManualJob(owner,pid,asset,[],"concept_visualization","Test manual import",false,"");assert.ok(job);assert.equal((await studioJobs(org,pid))[0].status,"awaiting_review");assert.equal(await reviewJob(owner,pid,job,"publish"),false);assert.equal(await reviewJob(owner,pid,job,"approve"),true);assert.equal(await reviewJob(owner,pid,job,"publish"),true);assert.equal((await pool.query("SELECT visible FROM property_media WHERE id=$1",[asset])).rows[0].visible,true);assert.equal(await reviewJob(owner,pid,job,"unpublish"),true);
+ const input={slug:"emerald-villa",name:"Receipt test",phone:"0000000010",email:"",budget:0,location:"Nipania",bhk:0,purpose:"buy",message:"",consent:"yes"};const sub=await publicSubmit(input);assert.equal(sub.status,"ok");assert.equal((await enquiryReceipt(sub.token)).property_title,"Royal Emerald Villa");assert.equal(await enquiryReceipt("a".repeat(64)),null);
+});
+
+import {ownerBrand,saveBrand,defaultBrand} from "../src/lib/branding-store.mjs";import {reports} from "../src/lib/report-store.mjs";
+test("branding persistence and real report aggregation",async()=>{const org=(await pool.query("SELECT id FROM organizations WHERE slug='indore-prime-demo'")).rows[0].id;assert.equal(await saveBrand(org,{...defaultBrand,hero_title:"A test hero title"}),true);assert.equal((await ownerBrand(org)).hero_title,"A test hero title");await saveBrand(org,defaultBrand);assert.ok((await reports(org,30)).summary.leads>=3);});

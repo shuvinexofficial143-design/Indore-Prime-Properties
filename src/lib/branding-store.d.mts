@@ -1,0 +1,1 @@
+export type Brand={name:string;hero_title:string;hero_description:string;footer:string;primary:string;ivory:string;gold:string};export const defaultBrand:Brand;export function ownerBrand(org:string):Promise<Brand>;export function publicBrand():Promise<Brand>;export function saveBrand(org:string,input:unknown):Promise<boolean>;

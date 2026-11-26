@@ -1,0 +1,11 @@
+import {db} from "./db.mjs";
+export const reportDays=value=>[7,30,90].includes(Number(value))?Number(value):30;
+export async function reports(org,days){const c=db(),params=[org,reportDays(days)];const [summary,sources,top,stages,visit,storage]=await Promise.all([
+c.query(`SELECT (SELECT count(*)::int FROM property_events WHERE organization_id=$1 AND created_at>=now()-($2::int*interval '1 day')) views,(SELECT count(*)::int FROM leads WHERE organization_id=$1 AND created_at>=now()-($2::int*interval '1 day')) leads,(SELECT count(*)::int FROM site_visits WHERE organization_id=$1 AND created_at>=now()-($2::int*interval '1 day')) visits,(SELECT count(*)::int FROM leads WHERE organization_id=$1 AND status='closed' AND updated_at>=now()-($2::int*interval '1 day')) closed,(SELECT count(*)::int FROM follow_up_tasks WHERE organization_id=$1 AND NOT done) pending,(SELECT count(*)::int FROM ai_generation_jobs WHERE organization_id=$1 AND started_at>=now()-($2::int*interval '1 day')) studio_jobs`,params),
+c.query("SELECT source AS label,count(*)::int AS count FROM leads WHERE organization_id=$1 AND created_at>=now()-($2::int*interval '1 day') GROUP BY source ORDER BY count DESC,label",params),
+c.query("SELECT p.title AS label,count(*)::int AS count FROM property_events e JOIN properties p ON p.id=e.property_id AND p.organization_id=e.organization_id WHERE e.organization_id=$1 AND e.created_at>=now()-($2::int*interval '1 day') GROUP BY p.id,p.title ORDER BY count DESC,label LIMIT 10",params),
+c.query("SELECT status AS label,count(*)::int AS count FROM leads WHERE organization_id=$1 AND created_at>=now()-($2::int*interval '1 day') GROUP BY status ORDER BY count DESC,label",params),
+c.query("SELECT status AS label,count(*)::int AS count FROM site_visits WHERE organization_id=$1 AND created_at>=now()-($2::int*interval '1 day') GROUP BY status ORDER BY count DESC,label",params),
+c.query("SELECT COALESCE(sum(bytes),0)::text AS bytes,count(*)::int AS files FROM property_media WHERE organization_id=$1",[org])
+]);return {summary:summary.rows[0],sources:sources.rows,top:top.rows,stages:stages.rows,visits:visit.rows,storage:storage.rows[0]};}
+export function csvCell(value){const s=String(value??"");return '"'+(/^[\s\u0000-\u001f]*[=+\-@]/.test(s)?"'"+s:s).replace(/"/g,'""')+'"';}

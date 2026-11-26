@@ -1,3 +1,4 @@
+import {imageSize} from "image-size";
 export const MAX_MEDIA=3*1024*1024;
 const mimeKinds={photo:["image/jpeg","image/png","image/webp"],floor_plan:["image/jpeg","image/png","image/webp","application/pdf"],brochure:["application/pdf"],model:["model/gltf-binary"],panorama:["image/jpeg","image/png","image/webp"]};
 export function checkMedia(kind,bytes){
@@ -14,5 +15,6 @@ export function checkMedia(kind,bytes){
  mime="model/gltf-binary";
  }
  if(!mimeKinds[kind].includes(mime))throw Error("File type does not match media category");
+ if(mime.startsWith("image/")){const d=imageSize(b);if(!d.width||!d.height||d.width*d.height>20000000)throw Error("Invalid or oversized image dimensions");if(kind==="panorama"&&(d.width<512||Math.abs(d.width/d.height-2)>.08))throw Error("Panorama must be an equirectangular 2:1 image");}
  return mime;
 }

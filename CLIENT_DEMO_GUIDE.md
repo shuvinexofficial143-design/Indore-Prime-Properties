@@ -1,2 +1,2 @@
-# Demo guide
-Phase 0 only: home and about screens describe the fictional portfolio. The full demo is not yet available. Planned flow: property discovery → interactive model → panorama → enquiry → CRM → agent assignment → visit request/confirmation → follow-up. Use isolated fictional data only.
+# Shuvi 360 demonstration
+Open /demo, browse fictional catalog, open Royal Emerald Villa, rotate/zoom model, choose cutaway, open 360° room tour, use EMI or rule-based assistant. With a working DB, submit fictional enquiry (000000XXXX) and future demo visit; preserve receipt links. Authorized owner signs in, opens CRM, assigns agent, updates stage, notes/follow-ups, confirms visit; receipt reflects changes. AI studio manual import only, no real AI generation. Reports and branding available to owner. No real phone calls, appointments, payments or public admin credentials. Per-visitor admin isolation pending; never expose real data. Live deployment not available.
