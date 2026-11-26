@@ -1,0 +1,1 @@
+import {requireRole} from "@/lib/auth";import {FollowupsPage} from "@/components/crm-pages";export const dynamic="force-dynamic";export default async function Page(){return <FollowupsPage u={await requireRole("owner")}/>}

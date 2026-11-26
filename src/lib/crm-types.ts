@@ -1,0 +1,10 @@
+import type {SessionUser} from "./auth";
+export type Actor=SessionUser;
+export type Lead={id:string;property_id:string;customer_name:string;phone:string;email:string|null;budget_paise:string|null;preferred_location:string;preferred_bhk:number;purpose:string;source:string;utm_source:string|null;utm_medium:string|null;utm_campaign:string|null;status:string;assigned_agent_id:string|null;agent_email:string|null;property_title:string;property_slug:string;created_at:Date;updated_at:Date};
+export type Agent={id:string;email:string};
+export type Activity={event:string;detail:string;created_at:Date;actor:string|null};
+export type Followup={id:string;lead_id:string;assigned_user_id:string;due_at:Date;note:string;done:boolean;customer_name:string;property_title:string};
+export type Visit={id:string;status:string;starts_at:Date;ends_at:Date;visitors:number;requirements:string;agent_id:string|null;lead_id:string;property_title:string;customer_name:string;agent_email:string|null};
+export type Notification={id:string;kind:string;message:string;read_at:Date|null;created_at:Date};
+export const formatDate=(value:Date|string)=>new Intl.DateTimeFormat("en-IN",{timeZone:"Asia/Kolkata",dateStyle:"medium",timeStyle:"short"}).format(new Date(value));
+export const stageLabel=(value:string)=>value.split("_").map(x=>x.charAt(0).toUpperCase()+x.slice(1)).join(" ");

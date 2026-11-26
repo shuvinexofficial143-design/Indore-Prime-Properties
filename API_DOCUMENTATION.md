@@ -1,3 +1,4 @@
-# API
-GET /api/health: application liveness only.
-POST /api/auth/login: URL-encoded email and password, exact same-origin required; 303 on successful login or invalid/rate-limited credentials, 403 invalid origin, 503 unconfigured/unavailable database. HttpOnly SameSite=Lax session cookie; Secure and __Host- prefix in production. POST /api/auth/logout: same origin required, revoke database session, clear cookie on success. /admin, /agent, /app enforce distinct roles on the server.
+# API and server actions
+GET /api/health: liveness only. POST /api/auth/login and logout enforce same-origin, hashed server sessions and secure cookies. /admin, /agent, /app have server role guards.
+POST /api/media/upload: owner-only, tenant property, private S3-compatible storage, supported signatures and 3 MB limit; new assets private. GET /api/media/[id]: authorized owner or published demo asset; private no-store response and PDF attachment.
+Property management and CRM actions are Next server actions with role/tenant checks. Public demo enquiry/visit actions validate fictional contacts, consent, availability, per-contact/global limits, and transactional persistence. Visits return random private receipt; only status/property/time are shown. Owner/agent actions enforce assignment scope, state transitions, and overlapping appointment check. No external messaging or calling enabled.
