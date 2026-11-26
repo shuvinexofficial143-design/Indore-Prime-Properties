@@ -1,10 +1,4 @@
 import assert from "node:assert/strict";
-const origin = process.env.TEST_ORIGIN || "http://localhost:3000";
-for (const path of ["/", "/about", "/robots.txt", "/api/health"]) {
-  const res = await fetch(origin + path);
-  assert.equal(res.status, 200, path);
-  assert.match(res.headers.get("x-robots-tag") || "", /noindex/);
-  if (path === "/api/health") assert.equal((await res.json()).scope, "application-liveness");
-  else if (path === "/") assert.match(await res.text(), /fictional real-estate platform/);
-}
-console.log("HTTP smoke tests passed");
+const origin=process.env.TEST_ORIGIN||"http://localhost:3000";
+for(const [path,expected] of [["/","Fictional real-estate platform"],["/about","fictional brand"],["/properties?purpose=rent","Urban Executive Suite"],["/property/emerald-villa","Royal Emerald Villa"],["/contact","Contact channels not configured"],["/robots.txt","Disallow: /"],["/api/health","application-liveness"]]){const res=await fetch(origin+path);assert.equal(res.status,200,path);assert.match(res.headers.get("x-robots-tag")||"",/noindex/);assert.ok((await res.text()).includes(expected),path);}
+const empty=await fetch(origin+"/properties?location=MR-10");assert.ok((await empty.text()).includes("No matching demo properties"));const missing=await fetch(origin+"/property/unknown");assert.equal(missing.status,404);console.log("HTTP smoke tests passed");

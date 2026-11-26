@@ -1,0 +1,3 @@
+import Link from "next/link";
+import {Header,Footer} from "@/components/site";
+export default function Contact(){return <><Header/><main className="section"><p className="eyebrow">SHUVI 360</p><h1>Contact the demo</h1><p>Indore Prime Properties is a fictional portfolio project for Indore, Madhya Pradesh, India.</p><div className="notice"><strong>Contact channels not configured.</strong><p>Real phone, WhatsApp, email, enquiry and booking channels will be configured by the authorized owner. Do not submit personal information to this demo yet.</p></div><Link href="/properties" className="button">Explore demo listings</Link></main><Footer/></>}
