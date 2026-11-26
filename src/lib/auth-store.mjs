@@ -18,8 +18,7 @@ export async function authenticate(email,password){
  const valid=await verifyPassword(password,user?.password_hash??dummy);
  if(!user||!valid)return {status:"invalid"};
  const token=randomBytes(32).toString("hex");
- await conn.query("INSERT INTO sessions(token_hash,user_id,expires_at) VALUES($1,$2,now()+($3::int*interval '1 second'))",[digest(token),user.id,SESSION_SECONDS]);
- return {status:"ok",token,role:user.role};
+ const client=await conn.connect();try{await client.query("BEGIN");const fresh=(await client.query("SELECT id,role,password_hash FROM users WHERE id=$1 AND active=true FOR UPDATE",[user.id])).rows[0];if(!fresh||fresh.password_hash!==user.password_hash){await client.query("ROLLBACK");return {status:"invalid"};}await client.query("INSERT INTO sessions(token_hash,user_id,expires_at) VALUES($1,$2,now()+($3::int*interval '1 second'))",[digest(token),user.id,SESSION_SECONDS]);await client.query("DELETE FROM login_attempts WHERE email_hash=$1",[digest(key)]);await client.query("COMMIT");return {status:"ok",token,role:fresh.role};}catch(e){await client.query("ROLLBACK");throw e;}finally{client.release();}
 }
 /** @param {string} token */
 export async function sessionUser(token){

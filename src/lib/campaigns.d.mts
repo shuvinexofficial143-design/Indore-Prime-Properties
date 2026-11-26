@@ -1,0 +1,1 @@
+export function campaignPath(slug:string,source:string,medium:string,campaign:string):string|null;

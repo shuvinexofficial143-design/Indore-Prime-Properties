@@ -1,0 +1,1 @@
+export function campaignPath(slug,source,medium,campaign){if(typeof slug!=="string"||!(/^[a-z0-9-]{1,100}$/).test(slug)||![source,medium,campaign].every(x=>typeof x==="string"&&/^[a-zA-Z0-9_.-]{1,80}$/.test(x)))return null;return "/property/"+slug+"?"+new URLSearchParams({utm_source:source,utm_medium:medium,utm_campaign:campaign}).toString();}
