@@ -1,0 +1,1 @@
+export function interpretFollowup(previous:Record<string,string>,input:string):{filters:Record<string,string>;changed:boolean};

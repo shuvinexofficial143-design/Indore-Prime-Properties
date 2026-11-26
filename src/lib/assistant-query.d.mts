@@ -1,0 +1,1 @@
+export function parsePropertyQuery(input:string):Record<string,string>;

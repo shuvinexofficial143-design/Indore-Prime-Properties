@@ -1,0 +1,3 @@
+"use server";import {requireRole} from "@/lib/auth";import {createTeamUser,manageTeamUser} from "@/lib/team-store.mjs";import {redirect} from "next/navigation";
+export async function addAccount(f:FormData){const u=await requireRole("owner");let ok=false;try{ok=await createTeamUser(u,{email:String(f.get("email")||""),password:String(f.get("password")||""),role:String(f.get("role")||"")});}catch{}redirect("/admin/team?result="+(ok?"created":"invalid"));}
+export async function manageAccount(f:FormData){const u=await requireRole("owner");let ok=false;try{ok=await manageTeamUser(u,String(f.get("id")||""),String(f.get("action")||""),String(f.get("password")||""));}catch{}redirect("/admin/team?result="+(ok?"updated":"invalid"));}

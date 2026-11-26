@@ -1,0 +1,5 @@
+"use server";import {cookies} from "next/headers";import {redirect} from "next/navigation";import {databaseConfigured} from "@/lib/db.mjs";import {createSandbox,updateSandbox,closeSandbox} from "@/lib/sandbox-store.mjs";
+const name=process.env.NODE_ENV==="production"?"__Host-indore_sandbox":"indore_sandbox";
+export async function start(){if(!databaseConfigured())redirect("/demo/sandbox?error=database");const jar=await cookies();let token:string|null=null;try{token=await createSandbox(jar.get(name)?.value);}catch{}if(!token)redirect("/demo/sandbox?error=capacity");jar.set(name,token,{httpOnly:true,secure:process.env.NODE_ENV==="production",sameSite:"strict",path:"/",maxAge:7200});redirect("/demo/sandbox");}
+export async function change(f:FormData){const jar=await cookies();let ok=false;try{ok=await updateSandbox(jar.get(name)?.value,String(f.get("action")||""),Object.fromEntries(["id","status","price","property"].map(k=>[k,String(f.get(k)||"")])));}catch{}redirect("/demo/sandbox"+(ok?"":"?error=invalid"));}
+export async function close(){const jar=await cookies();try{await closeSandbox(jar.get(name)?.value);}catch{}jar.delete(name);redirect("/demo/sandbox");}

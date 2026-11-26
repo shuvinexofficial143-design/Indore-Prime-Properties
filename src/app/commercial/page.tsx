@@ -1,1 +1,1 @@
-import {redirect} from "next/navigation";export default function Commercial(){redirect("/properties?type=Office%20Space");}
+import {redirect} from "next/navigation";export default function Commercial(){redirect("/properties?commercial=yes");}

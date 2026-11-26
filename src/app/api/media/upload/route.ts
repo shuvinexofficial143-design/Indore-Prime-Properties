@@ -8,9 +8,10 @@ export async function POST(req:Request){
  try{
  const f=await req.formData(),pid=String(f.get("property")||""),kind=String(f.get("kind")||""),title=String(f.get("title")||"").trim(),file=f.get("file");
  if(!(file instanceof File)||file.size>MAX_MEDIA||!title||title.length>120||!(await ownerProperty(u.organization_id,pid)))return NextResponse.json({error:"Invalid media or property"},{status:400});
+ const room=String(f.get("room")||"").trim(),caption=String(f.get("caption")||"").trim();if(room.length>80||caption.length>500)return NextResponse.json({error:"Invalid media metadata"},{status:400});
  const bytes=new Uint8Array(await file.arrayBuffer());const mime=checkMedia(kind,bytes);key=u.organization_id+"/"+pid+"/"+randomUUID();
- await storeObject(key,bytes,mime);uploaded=true;
- await db().query("INSERT INTO property_media(organization_id,property_id,kind,mime,storage_key,bytes,title) VALUES($1,$2,$3,$4,$5,$6,$7)",[u.organization_id,pid,kind,mime,key,bytes.length,title]);
+ const c=await db().connect();try{await c.query("BEGIN");await c.query("SELECT pg_advisory_xact_lock(hashtext($1))",[u.organization_id]);const q=(await c.query("SELECT count(*) FILTER(WHERE property_id=$2)::int AS n,COALESCE(sum(bytes),0)::bigint AS used FROM property_media WHERE organization_id=$1",[u.organization_id,pid])).rows[0];if(q.n>=100||Number(q.used)+bytes.length>1024*1024*1024){await c.query("ROLLBACK");return NextResponse.json({error:"Media quota reached"},{status:413});}await storeObject(key,bytes,mime);uploaded=true;await c.query("INSERT INTO property_media(organization_id,property_id,kind,mime,storage_key,bytes,title,room_label,caption) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)",[u.organization_id,pid,kind,mime,key,bytes.length,title,room,caption]);await c.query("COMMIT");}catch(e){await c.query("ROLLBACK");throw e;}finally{c.release();}
+ if(req.headers.get("accept")?.includes("application/json"))return NextResponse.json({ok:true},{status:201});
  return NextResponse.redirect(new URL("/admin/properties/"+pid,req.url),303);
  }catch{if(uploaded&&key)try{await deleteObject(key);}catch{}return NextResponse.json({error:"Upload failed; check supported format and storage configuration"},{status:400});}
 }

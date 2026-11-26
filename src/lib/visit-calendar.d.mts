@@ -1,0 +1,1 @@
+import type {Visit} from "./crm-types";export function localDate(value:Date|string|number):string;export function weekStart(date?:string):string;export function shiftDay(date:string,days:number):string;export function calendarDays(date:string|undefined,visits:Visit[]):{day:string;rows:Visit[]}[];

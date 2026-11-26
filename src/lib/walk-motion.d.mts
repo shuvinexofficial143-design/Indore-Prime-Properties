@@ -1,0 +1,1 @@
+export type Obstacle={minX:number;maxX:number;minZ:number;maxZ:number};export type Position={x:number;z:number};export function canStand(x:number,z:number,obstacles:Obstacle[],radius?:number):boolean;export function walkStep(pos:Position,dx:number,dz:number,obstacles:Obstacle[]):Position;

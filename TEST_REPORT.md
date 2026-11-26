@@ -1,13 +1,11 @@
-# Test report
+# Advanced preview test report
+Verified code commit: 74e13b27472a23926d15b080975adf5091ae4496
+CI: https://github.com/shuvinexofficial143-design/Indore-Prime-Properties/actions/runs/45825079526 (completed successfully)
 
-Verified code commit: d93b49811179c923f08b88fa79886fe0ed24cfd7
-CI: https://github.com/shuvinexofficial143-design/Indore-Prime-Properties/actions/runs/45819665470 (success)
+- Unit: 32 passed, 0 failed, including optional OpenAI and Meshy adapter tests using mocks only.
+- PostgreSQL integration: 11 passed, 0 failed; migrations and seed run twice.
+- TypeScript: passed. Production build: passed. HTTP smoke: passed.
+- Chromium Playwright: 16 passed (15.2s). Covers demo catalog, responsive layouts, account/role flows, property management, CRM, saved properties, 3D/360/collision walkthrough, isolated practice workspace, document vault authorization, local studio exports, gallery and multi-turn search as implemented in the browser suite.
+- Earlier CI 45824335427 passed 29 unit, 11 DB and 15 browser tests. New chat type error corrected before final verified code revision.
 
-- Unit tests: 15 passed, 0 failed.
-- PostgreSQL integration: 4 passed, 0 failed; migrations and seed ran twice successfully.
-- TypeScript and production build: passed.
-- HTTP smoke: passed.
-- Chromium Playwright: 6 passed, 0 failed (7.8s). Includes five responsive viewport widths, catalog, saved/compare/EMI, actual 3D and 360 WebGL canvases, protected owner property creation, enquiry-to-CRM, demo center, rule-based assistant and PWA metadata.
-- Prior corrected CI 45819173970 passed 5/5 browser tests after explicit Status accessible label fix.
-
-Limitations: test DB is disposable; live Neon, Vercel and S3 are not provisioned or tested. Actual AI generation, external communication providers, native/PWA device installation and full security/accessibility auditing remain unverified. Manual studio and preview code are not equivalent to completed production integrations. No production merge.
+Limitations: CI uses disposable PostgreSQL 16, not live Neon. No actual Vercel project/deployment, private S3 storage, paid Meshy/OpenAI request or external messaging/calling verified. 3D is conceptual, not measured reconstruction. Full security, accessibility, native device and PWA installation audits remain. Subsequent docs-only commits do not change verified application code. No production merge.
