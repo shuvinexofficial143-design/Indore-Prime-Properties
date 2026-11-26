@@ -1,6 +1,6 @@
 import {imageSize} from "image-size";
 export const MAX_MEDIA=3*1024*1024;
-const mimeKinds={photo:["image/jpeg","image/png","image/webp"],floor_plan:["image/jpeg","image/png","image/webp","application/pdf"],brochure:["application/pdf"],model:["model/gltf-binary"],panorama:["image/jpeg","image/png","image/webp"]};
+const mimeKinds={photo:["image/jpeg","image/png","image/webp"],floor_plan:["image/jpeg","image/png","image/webp","application/pdf"],brochure:["application/pdf"],model:["model/gltf-binary"],panorama:["image/jpeg","image/png","image/webp"],video:["video/mp4"]};
 export function checkMedia(kind,bytes){
  if(!mimeKinds[kind]||!bytes.length||bytes.length>MAX_MEDIA)throw Error("Unsupported file or size");
  const b=Buffer.from(bytes);let mime="";
@@ -8,6 +8,7 @@ export function checkMedia(kind,bytes){
  else if(b.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10])))mime="image/png";
  else if(b.toString("ascii",0,4)==="RIFF"&&b.toString("ascii",8,12)==="WEBP")mime="image/webp";
  else if(b.toString("ascii",0,5)==="%PDF-")mime="application/pdf";
+ else if(b.length>=24&&b.toString("ascii",4,8)==="ftyp"&&b.readUInt32BE(0)>=16&&b.readUInt32BE(0)<=b.length&&["isom","iso2","mp41","mp42","avc1","M4V "].includes(b.toString("ascii",8,12)))mime="video/mp4";
  else if(b.length>=20&&b.toString("ascii",0,4)==="glTF"&&b.readUInt32LE(4)===2&&b.readUInt32LE(8)===b.length){
  const n=b.readUInt32LE(12);if(n<2||20+n>b.length||b.readUInt32LE(16)!==0x4e4f534a)throw Error("Invalid GLB");
  const doc=JSON.parse(b.toString("utf8",20,20+n).trim());

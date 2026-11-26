@@ -1,0 +1,1 @@
+export function mediaRange(header:string|null,length:number):{start:number;end:number}|false|null;
