@@ -1,0 +1,1 @@
+import type {SessionUser} from "./auth";export function savedSlugs(actor:SessionUser|null):Promise<string[]>;export function setSaved(actor:SessionUser|null,slug:string,wanted:boolean):Promise<boolean>;
