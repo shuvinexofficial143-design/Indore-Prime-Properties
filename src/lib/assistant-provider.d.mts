@@ -1,0 +1,1 @@
+export function sanitizeFilters(value:unknown):Record<string,string>;export function providerInput(value:unknown):value is string;export function assistantProviderConfigured():boolean;export function interpretWithProvider(input:{message:string;previous:unknown;apiKey:string;model:string},fetcher?:typeof fetch):Promise<Record<string,string>>;
