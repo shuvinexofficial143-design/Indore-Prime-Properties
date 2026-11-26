@@ -8,6 +8,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: disposable_ci_only
+          POSTGRES_DB: indore_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U test -d indore_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      DATABASE_URL: postgresql://test:disposable_ci_only@127.0.0.1:5432/indore_test
+      TEST_DATABASE_ONLY: '1'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -15,6 +30,11 @@ jobs:
           node-version: '22'
       - run: npm install --no-audit --no-fund
       - run: npm test
+      - run: npm run db:migrate
+      - run: npm run db:migrate
+      - run: npm run db:seed
+      - run: npm run db:seed
+      - run: npm run test:db
       - run: npm run typecheck
       - run: npm run build
       - name: HTTP smoke test
@@ -27,3 +47,8 @@ jobs:
             sleep 1
           done
           node tests/http-smoke.mjs
+          for path in admin agent app; do
+            status=$(curl -s -o /dev/null -w '%{http_code}' "http://localhost:3000/$path")
+            test "$status" = 307
+          done
+          test "$(curl -s -o /dev/null -w '%{http_code}' -X POST http://localhost:3000/api/auth/login)" = 403
