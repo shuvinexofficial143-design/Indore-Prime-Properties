@@ -1,0 +1,4 @@
+import {db} from "../src/lib/db.mjs";
+import {readFile,readdir} from "node:fs/promises";
+const pool=db(),client=await pool.connect();
+try{await client.query("BEGIN");await client.query("SELECT pg_advisory_xact_lock(78210401)");await client.query("CREATE TABLE IF NOT EXISTS schema_migrations(version text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())");for(const name of (await readdir(new URL("../db/migrations/",import.meta.url))).filter(x=>x.endsWith(".sql")).sort()){const seen=await client.query("SELECT 1 FROM schema_migrations WHERE version=$1",[name]);if(seen.rowCount)continue;await client.query(await readFile(new URL("../db/migrations/"+name,import.meta.url),"utf8"));await client.query("INSERT INTO schema_migrations(version) VALUES($1)",[name]);console.log("Applied "+name);}await client.query("COMMIT");}catch(e){await client.query("ROLLBACK");throw e;}finally{client.release();await pool.end();}

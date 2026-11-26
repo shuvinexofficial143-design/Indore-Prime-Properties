@@ -1,0 +1,3 @@
+import {test} from "node:test";import assert from "node:assert/strict";import {hashPassword,verifyPassword} from "../src/lib/password.mjs";
+test("salted password hashes verify correct passwords only",async()=>{const a=await hashPassword("test-password-123"),b=await hashPassword("test-password-123");assert.notEqual(a,b);assert.ok(await verifyPassword("test-password-123",a));assert.equal(await verifyPassword("wrong-password",a),false);assert.equal(await verifyPassword("test-password-123","bad"),false);});
+test("short passwords are rejected",async()=>{await assert.rejects(hashPassword("short"));});

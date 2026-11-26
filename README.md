@@ -1,15 +1,4 @@
 # Indore Prime Properties
-A fictional portfolio demo by Shuvi 360. No actual properties are offered for sale or rent.
-
-## Local development
-Node.js 22 LTS and npm required.
-```sh
-npm install
-npm run dev
-npm run test
-npm run typecheck
-npm run build
-```
-Open http://localhost:3000. The health endpoint is /api/health. It reports application liveness only, not database readiness.
-
-See PROJECT_SPEC.md and DEVELOPMENT_STATUS.md for scope and verification. Do not use real customer data in the demo. Keep secrets in environment variables and never commit .env.local.
+Fictional real estate portfolio demonstration by Shuvi 360. No actual property offers.
+Node.js 22 and npm required. Run npm install, npm test, npm run typecheck, npm run build, npm run dev.
+For authorized dedicated Neon only: configure DATABASE_URL (sslmode=verify-full) and APP_ORIGIN in .env.local; run npm run db:migrate and npm run db:seed. To create an authorized demo user, set BOOTSTRAP_EMAIL, BOOTSTRAP_PASSWORD (12–128 characters) and BOOTSTRAP_ROLE (owner/agent/customer) locally, run npm run db:bootstrap-user, then remove the bootstrap variables. Never commit credentials or use another project's database. No registration or password reset yet. Public catalog remains illustrative. Integration tests only run against disposable CI PostgreSQL. See DEVELOPMENT_STATUS.md.

@@ -1,9 +1,8 @@
 # Development status
-Current phase: 0 validation / Phase 1 preview implementation.
-- Phase 0 scaffold implemented; runtime verification pending. npm registry DNS unavailable in local environment. Next 16.4.6 existence confirmed from npm package listing.
-- Phase 1 preview: responsive public homepage, navigation, featured/luxury/affordable/commercial categories, ten localities, searchable catalog of eight fictional illustrative records, detail pages, contact placeholder explicitly unconfigured. Original SVG concepts, not photographs. Actual photography, database-backed listings, real contact, booking, 3D, tours and PWA pending.
-- Vercel preview blocked: create project returned 403 forbidden in Avanti Verse team. No production deployment.
-- Neon and authentication not started; no migrations or secrets.
-- Test source added for filters, data and HTTP paths. CI and actual browser verification pending. Do not mark phase Tested before results.
-- Next: resolve build/preview permission; browser checks at requested widths; approved architecture photography; then Phase 2.
-- All later phases not started. No paid API enabled.
+Current phase: Phase 2 implementation on preview/phase-2-database.
+- Phase 0/1 CI run 45815666613: installation, unit tests, TypeScript, production build and HTTP smoke all passed for commit 464bbb2. Browser testing, licensed photos, Vercel preview still pending.
+- Phase 2: versioned PostgreSQL migration, idempotent seed, login with scrypt, hashed session tokens, expiry, email-keyed attempt limit, secure cookies, same-origin POST, role-guarded owner/agent/customer pages, organization-scoped property counts. SQL/pg selected rather than ORM. No public credentials.
+- Neon list_organizations and list_projects returned Tool not found. Dedicated live database not created/connected; migrations not applied to Neon. CI disposable PostgreSQL service added. Real deployment blocked by prior Vercel create-project 403.
+- Phase 2 code implemented; CI and browser testing pending. Public catalog remains static until Phase 3.
+- Next: verify CI, resolve dedicated Neon and Vercel permissions, configure DATABASE_URL and APP_ORIGIN securely, apply migrations/seed and bootstrap accounts, verify real browser login; then Phase 3.
+- No paid external integration; no production merge.
