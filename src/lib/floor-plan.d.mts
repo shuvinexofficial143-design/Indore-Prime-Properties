@@ -1,0 +1,1 @@
+export type Room={name:string;x:number;y:number;width:number;depth:number};export const roomKinds:string[];export const sampleRooms:Room[];export function validateRooms(rooms:Room[],height:number):string;export function planBounds(rooms:Room[]):{width:number;depth:number;area:number};

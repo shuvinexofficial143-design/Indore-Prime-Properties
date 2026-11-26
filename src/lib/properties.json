@@ -11,7 +11,24 @@
     "area": 3600,
     "art": "villa",
     "description": "A contemporary courtyard villa with a generous family layout.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Unfurnished",
+      "construction": "Ready to move",
+      "parking": 2,
+      "balconies": 2,
+      "carpet": 2844,
+      "builtUp": 3600,
+      "amenities": [
+        "Garden",
+        "Balcony",
+        "Security"
+      ],
+      "negotiable": true,
+      "featured": true,
+      "plot": 4140,
+      "saleKind": "New project"
+    }
   },
   {
     "slug": "skyline-residence",
@@ -25,7 +42,25 @@
     "area": 1650,
     "art": "tower",
     "description": "A light-filled apartment concept with an open living and dining area.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Semi-furnished",
+      "construction": "Ready to move",
+      "parking": 1,
+      "balconies": 1,
+      "carpet": 1304,
+      "builtUp": 1650,
+      "amenities": [
+        "Lift",
+        "Security",
+        "Power backup"
+      ],
+      "negotiable": false,
+      "featured": true,
+      "floor": 3,
+      "totalFloors": 8,
+      "saleKind": "Resale"
+    }
   },
   {
     "slug": "garden-house",
@@ -39,7 +74,23 @@
     "area": 1450,
     "art": "house",
     "description": "A compact family house concept with a landscaped entrance.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Furnished",
+      "construction": "Ready to move",
+      "parking": 1,
+      "balconies": 1,
+      "carpet": 1146,
+      "builtUp": 1450,
+      "amenities": [
+        "Garden",
+        "Balcony"
+      ],
+      "negotiable": true,
+      "featured": true,
+      "plot": 1667,
+      "saleKind": "New project"
+    }
   },
   {
     "slug": "urban-suite",
@@ -53,7 +104,25 @@
     "area": 1150,
     "art": "tower",
     "description": "An illustrative city apartment for a flexible urban lifestyle.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Unfurnished",
+      "construction": "Ready to move",
+      "parking": 1,
+      "balconies": 1,
+      "carpet": 909,
+      "builtUp": 1150,
+      "amenities": [
+        "Lift",
+        "Security",
+        "Power backup",
+        "Gym"
+      ],
+      "negotiable": false,
+      "featured": true,
+      "floor": 5,
+      "totalFloors": 8
+    }
   },
   {
     "slug": "corridor-office",
@@ -67,7 +136,22 @@
     "area": 1800,
     "art": "office",
     "description": "An open-plan commercial workspace concept.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Semi-furnished",
+      "construction": "Ready to move",
+      "parking": 1,
+      "balconies": 0,
+      "carpet": 1422,
+      "builtUp": 1800,
+      "amenities": [
+        "Security",
+        "Power backup",
+        "Visitor parking"
+      ],
+      "negotiable": true,
+      "featured": false
+    }
   },
   {
     "slug": "olive-residence",
@@ -81,7 +165,25 @@
     "area": 1050,
     "art": "tower",
     "description": "An efficient two-bedroom home concept.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Furnished",
+      "construction": "Ready to move",
+      "parking": 0,
+      "balconies": 1,
+      "carpet": 830,
+      "builtUp": 1050,
+      "amenities": [
+        "Lift",
+        "Security",
+        "Power backup"
+      ],
+      "negotiable": false,
+      "featured": false,
+      "floor": 2,
+      "totalFloors": 8,
+      "saleKind": "Resale"
+    }
   },
   {
     "slug": "terrace-villa",
@@ -95,7 +197,24 @@
     "area": 4200,
     "art": "villa",
     "description": "A spacious illustrative villa with terraces and garden.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Unfurnished",
+      "construction": "Ready to move",
+      "parking": 2,
+      "balconies": 2,
+      "carpet": 3318,
+      "builtUp": 4200,
+      "amenities": [
+        "Garden",
+        "Balcony",
+        "Security"
+      ],
+      "negotiable": true,
+      "featured": false,
+      "plot": 4830,
+      "saleKind": "New project"
+    }
   },
   {
     "slug": "central-studio",
@@ -109,7 +228,24 @@
     "area": 680,
     "art": "house",
     "description": "A compact rental apartment concept.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Semi-furnished",
+      "construction": "Under construction",
+      "parking": 1,
+      "balconies": 1,
+      "carpet": 537,
+      "builtUp": 680,
+      "amenities": [
+        "Lift",
+        "Security",
+        "Power backup"
+      ],
+      "negotiable": false,
+      "featured": false,
+      "floor": 4,
+      "totalFloors": 8
+    }
   },
   {
     "slug": "maple-court",
@@ -123,7 +259,25 @@
     "area": 1800,
     "art": "tower",
     "description": "Fictional architectural concept for the Shuvi 360 portfolio. Illustrative specifications, not an actual listing.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Furnished",
+      "construction": "Ready to move",
+      "parking": 1,
+      "balconies": 1,
+      "carpet": 1422,
+      "builtUp": 1800,
+      "amenities": [
+        "Lift",
+        "Security",
+        "Power backup"
+      ],
+      "negotiable": true,
+      "featured": false,
+      "floor": 5,
+      "totalFloors": 8,
+      "saleKind": "New project"
+    }
   },
   {
     "slug": "green-haven",
@@ -137,7 +291,23 @@
     "area": 2500,
     "art": "house",
     "description": "Fictional architectural concept for the Shuvi 360 portfolio. Illustrative specifications, not an actual listing.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Unfurnished",
+      "construction": "Ready to move",
+      "parking": 1,
+      "balconies": 1,
+      "carpet": 1975,
+      "builtUp": 2500,
+      "amenities": [
+        "Garden",
+        "Balcony"
+      ],
+      "negotiable": false,
+      "featured": false,
+      "plot": 2875,
+      "saleKind": "Resale"
+    }
   },
   {
     "slug": "aurora-villa",
@@ -151,7 +321,24 @@
     "area": 3800,
     "art": "villa",
     "description": "Fictional architectural concept for the Shuvi 360 portfolio. Illustrative specifications, not an actual listing.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Semi-furnished",
+      "construction": "Ready to move",
+      "parking": 2,
+      "balconies": 2,
+      "carpet": 3002,
+      "builtUp": 3800,
+      "amenities": [
+        "Garden",
+        "Balcony",
+        "Security"
+      ],
+      "negotiable": true,
+      "featured": false,
+      "plot": 4370,
+      "saleKind": "New project"
+    }
   },
   {
     "slug": "parkview-flat",
@@ -165,7 +352,25 @@
     "area": 950,
     "art": "tower",
     "description": "Fictional architectural concept for the Shuvi 360 portfolio. Illustrative specifications, not an actual listing.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Furnished",
+      "construction": "Ready to move",
+      "parking": 0,
+      "balconies": 1,
+      "carpet": 751,
+      "builtUp": 950,
+      "amenities": [
+        "Lift",
+        "Security",
+        "Power backup"
+      ],
+      "negotiable": false,
+      "featured": false,
+      "floor": 3,
+      "totalFloors": 8,
+      "saleKind": "Resale"
+    }
   },
   {
     "slug": "sunset-house",
@@ -179,7 +384,23 @@
     "area": 1600,
     "art": "house",
     "description": "Fictional architectural concept for the Shuvi 360 portfolio. Illustrative specifications, not an actual listing.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Unfurnished",
+      "construction": "Ready to move",
+      "parking": 1,
+      "balconies": 1,
+      "carpet": 1264,
+      "builtUp": 1600,
+      "amenities": [
+        "Garden",
+        "Balcony"
+      ],
+      "negotiable": true,
+      "featured": false,
+      "plot": 1840,
+      "saleKind": "New project"
+    }
   },
   {
     "slug": "corridor-studio",
@@ -193,7 +414,24 @@
     "area": 650,
     "art": "tower",
     "description": "Fictional architectural concept for the Shuvi 360 portfolio. Illustrative specifications, not an actual listing.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Semi-furnished",
+      "construction": "Ready to move",
+      "parking": 1,
+      "balconies": 1,
+      "carpet": 514,
+      "builtUp": 650,
+      "amenities": [
+        "Lift",
+        "Security",
+        "Power backup"
+      ],
+      "negotiable": false,
+      "featured": false,
+      "floor": 5,
+      "totalFloors": 8
+    }
   },
   {
     "slug": "future-office",
@@ -207,7 +445,23 @@
     "area": 1550,
     "art": "office",
     "description": "Fictional architectural concept for the Shuvi 360 portfolio. Illustrative specifications, not an actual listing.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Furnished",
+      "construction": "Under construction",
+      "parking": 1,
+      "balconies": 0,
+      "carpet": 1225,
+      "builtUp": 1550,
+      "amenities": [
+        "Security",
+        "Power backup",
+        "Visitor parking"
+      ],
+      "negotiable": true,
+      "featured": false,
+      "saleKind": "New project"
+    }
   },
   {
     "slug": "bicholi-terrace",
@@ -221,7 +475,23 @@
     "area": 1950,
     "art": "house",
     "description": "Fictional architectural concept for the Shuvi 360 portfolio. Illustrative specifications, not an actual listing.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Unfurnished",
+      "construction": "Ready to move",
+      "parking": 1,
+      "balconies": 1,
+      "carpet": 1541,
+      "builtUp": 1950,
+      "amenities": [
+        "Garden",
+        "Balcony"
+      ],
+      "negotiable": false,
+      "featured": false,
+      "plot": 2243,
+      "saleKind": "Resale"
+    }
   },
   {
     "slug": "riverstone",
@@ -235,7 +505,24 @@
     "area": 1100,
     "art": "tower",
     "description": "Fictional architectural concept for the Shuvi 360 portfolio. Illustrative specifications, not an actual listing.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Semi-furnished",
+      "construction": "Ready to move",
+      "parking": 1,
+      "balconies": 1,
+      "carpet": 869,
+      "builtUp": 1100,
+      "amenities": [
+        "Lift",
+        "Security",
+        "Power backup"
+      ],
+      "negotiable": true,
+      "featured": false,
+      "floor": 3,
+      "totalFloors": 8
+    }
   },
   {
     "slug": "mr10-flat",
@@ -249,7 +536,25 @@
     "area": 1080,
     "art": "tower",
     "description": "Fictional architectural concept for the Shuvi 360 portfolio. Illustrative specifications, not an actual listing.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Furnished",
+      "construction": "Ready to move",
+      "parking": 0,
+      "balconies": 1,
+      "carpet": 853,
+      "builtUp": 1080,
+      "amenities": [
+        "Lift",
+        "Security",
+        "Power backup"
+      ],
+      "negotiable": false,
+      "featured": false,
+      "floor": 4,
+      "totalFloors": 8,
+      "saleKind": "Resale"
+    }
   },
   {
     "slug": "mr10-office",
@@ -263,7 +568,22 @@
     "area": 1200,
     "art": "office",
     "description": "Fictional architectural concept for the Shuvi 360 portfolio. Illustrative specifications, not an actual listing.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Unfurnished",
+      "construction": "Ready to move",
+      "parking": 1,
+      "balconies": 0,
+      "carpet": 948,
+      "builtUp": 1200,
+      "amenities": [
+        "Security",
+        "Power backup",
+        "Visitor parking"
+      ],
+      "negotiable": true,
+      "featured": false
+    }
   },
   {
     "slug": "ivory-villa",
@@ -277,7 +597,24 @@
     "area": 4600,
     "art": "villa",
     "description": "Fictional architectural concept for the Shuvi 360 portfolio. Illustrative specifications, not an actual listing.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Semi-furnished",
+      "construction": "Ready to move",
+      "parking": 2,
+      "balconies": 2,
+      "carpet": 3634,
+      "builtUp": 4600,
+      "amenities": [
+        "Garden",
+        "Balcony",
+        "Security"
+      ],
+      "negotiable": false,
+      "featured": false,
+      "plot": 5290,
+      "saleKind": "Resale"
+    }
   },
   {
     "slug": "ab-road-office",
@@ -291,7 +628,22 @@
     "area": 1350,
     "art": "office",
     "description": "Fictional architectural concept for the Shuvi 360 portfolio. Illustrative specifications, not an actual listing.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Furnished",
+      "construction": "Ready to move",
+      "parking": 1,
+      "balconies": 0,
+      "carpet": 1067,
+      "builtUp": 1350,
+      "amenities": [
+        "Security",
+        "Power backup",
+        "Visitor parking"
+      ],
+      "negotiable": true,
+      "featured": false
+    }
   },
   {
     "slug": "palasia-court",
@@ -305,7 +657,26 @@
     "area": 1700,
     "art": "tower",
     "description": "Fictional architectural concept for the Shuvi 360 portfolio. Illustrative specifications, not an actual listing.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Unfurnished",
+      "construction": "Under construction",
+      "parking": 1,
+      "balconies": 1,
+      "carpet": 1343,
+      "builtUp": 1700,
+      "amenities": [
+        "Lift",
+        "Security",
+        "Power backup",
+        "Gym"
+      ],
+      "negotiable": false,
+      "featured": false,
+      "floor": 3,
+      "totalFloors": 8,
+      "saleKind": "Resale"
+    }
   },
   {
     "slug": "bengali-home",
@@ -319,7 +690,23 @@
     "area": 1800,
     "art": "house",
     "description": "Fictional architectural concept for the Shuvi 360 portfolio. Illustrative specifications, not an actual listing.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Semi-furnished",
+      "construction": "Ready to move",
+      "parking": 1,
+      "balconies": 1,
+      "carpet": 1422,
+      "builtUp": 1800,
+      "amenities": [
+        "Garden",
+        "Balcony"
+      ],
+      "negotiable": true,
+      "featured": false,
+      "plot": 2070,
+      "saleKind": "New project"
+    }
   },
   {
     "slug": "bengali-flat",
@@ -333,7 +720,24 @@
     "area": 1000,
     "art": "tower",
     "description": "Fictional architectural concept for the Shuvi 360 portfolio. Illustrative specifications, not an actual listing.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Furnished",
+      "construction": "Ready to move",
+      "parking": 0,
+      "balconies": 1,
+      "carpet": 790,
+      "builtUp": 1000,
+      "amenities": [
+        "Lift",
+        "Security",
+        "Power backup"
+      ],
+      "negotiable": false,
+      "featured": false,
+      "floor": 5,
+      "totalFloors": 8
+    }
   },
   {
     "slug": "vijay-office",
@@ -347,7 +751,22 @@
     "area": 1600,
     "art": "office",
     "description": "Fictional architectural concept for the Shuvi 360 portfolio. Illustrative specifications, not an actual listing.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Unfurnished",
+      "construction": "Ready to move",
+      "parking": 1,
+      "balconies": 0,
+      "carpet": 1264,
+      "builtUp": 1600,
+      "amenities": [
+        "Security",
+        "Power backup",
+        "Visitor parking"
+      ],
+      "negotiable": true,
+      "featured": false
+    }
   },
   {
     "slug": "golden-meadows",
@@ -361,6 +780,24 @@
     "area": 2100,
     "art": "tower",
     "description": "Fictional architectural concept for the Shuvi 360 portfolio. Illustrative specifications, not an actual listing.",
-    "demo": true
+    "demo": true,
+    "details": {
+      "furnishing": "Semi-furnished",
+      "construction": "Ready to move",
+      "parking": 1,
+      "balconies": 1,
+      "carpet": 1659,
+      "builtUp": 2100,
+      "amenities": [
+        "Lift",
+        "Security",
+        "Power backup"
+      ],
+      "negotiable": false,
+      "featured": false,
+      "floor": 2,
+      "totalFloors": 8,
+      "saleKind": "Resale"
+    }
   }
 ]
