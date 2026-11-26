@@ -1,0 +1,1 @@
+import type {Property} from "./property-types";export const columns:string[];export function parseCsv(input:string):string[][];export function validatePropertyCsv(input:string):Property[];export function propertyCsv(rows:Property[]):string;export function importProperties(org:string,rows:Property[]):Promise<number>;
