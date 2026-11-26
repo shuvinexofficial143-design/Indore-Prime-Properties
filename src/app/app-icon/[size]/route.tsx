@@ -1,0 +1,2 @@
+import {ImageResponse} from "next/og";
+export async function GET(_req:Request,{params}:{params:Promise<{size:string}>}){const {size}=await params;if(size!=="192"&&size!=="512")return new Response(null,{status:404});const n=Number(size);return new ImageResponse(<div style={{width:"100%",height:"100%",display:"flex",alignItems:"center",justifyContent:"center",background:"#123c34",color:"#e4c58c",fontSize:n*.36,fontWeight:700,border:n*.055+"px solid #e4c58c"}}>IP</div>,{width:n,height:n});}

@@ -1,0 +1,5 @@
+const CACHE="indore-offline-v1";
+self.addEventListener("install",event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.add("/offline.html")).then(()=>self.skipWaiting())));
+self.addEventListener("activate",event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith("indore-offline-")&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
+const publicPage=path=>["/","/properties","/buy","/rent","/commercial","/saved","/compare","/recent","/calculator","/about","/contact","/assistant","/demo","/install"].includes(path)||/^\/property\/[a-z0-9-]+(?:\/(?:3d|tour|enquiry|visit))?$/.test(path);
+self.addEventListener("fetch",event=>{const req=event.request,url=new URL(req.url);if(req.method!=="GET"||req.mode!=="navigate"||url.origin!==self.location.origin||!publicPage(url.pathname))return;event.respondWith(fetch(req).catch(async()=>await caches.match("/offline.html")||new Response("Offline. No data was submitted.",{status:503,headers:{"Content-Type":"text/plain; charset=utf-8"}})));});

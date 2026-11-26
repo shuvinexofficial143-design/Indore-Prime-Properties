@@ -1,0 +1,2 @@
+"use server";import {requireRole} from "@/lib/auth";import {saveBrand} from "@/lib/branding-store.mjs";import {redirect} from "next/navigation";import {revalidatePath} from "next/cache";
+export async function updateBrand(f:FormData){const u=await requireRole("owner");let ok=false;try{ok=await saveBrand(u.organization_id,Object.fromEntries(["name","hero_title","hero_description","footer","primary","ivory","gold"].map(k=>[k,String(f.get(k)||"")])));}catch{}revalidatePath("/","layout");redirect("/admin/settings"+(ok?"":"?error=invalid"));}
