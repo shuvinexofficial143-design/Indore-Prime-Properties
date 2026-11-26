@@ -1,4 +1,2 @@
-import {requireRole} from "@/lib/auth";
-import {Dashboard} from "@/components/dashboard";
-export const dynamic="force-dynamic";
-export default async function Agent(){const user=await requireRole("agent");return <Dashboard user={user} title="Agent workspace"><p className="notice">Your account is authorized. Lead assignments, visits and follow-ups are not implemented yet.</p></Dashboard>}
+import Link from "next/link";import {requireRole} from "@/lib/auth";import {Dashboard} from "@/components/dashboard";import {StaffNav} from "@/components/crm-pages";import {getLeads,visits,followups} from "@/lib/crm-store.mjs";export const dynamic="force-dynamic";
+export default async function Agent(){const u=await requireRole("agent"),[l,v,f]=await Promise.all([getLeads(u),visits(u),followups(u)]);return <Dashboard user={u} title="Agent workspace"><StaffNav u={u}/><div className="benefits"><div><h2>{l.length}</h2><p>Assigned demo leads</p></div><div><h2>{v.filter(x=>["requested","confirmed","rescheduled"].includes(x.status)&&new Date(x.starts_at).getTime()>Date.now()).length}</h2><p>Upcoming visits</p></div><div><h2>{f.filter(x=>!x.done).length}</h2><p>Pending follow-ups</p></div></div><div className="toolbar"><Link href="/agent/leads" className="button">Open assigned leads</Link><Link href="/agent/visits" className="button outline">Manage visits</Link></div></Dashboard>}

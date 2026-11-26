@@ -1,0 +1,1 @@
+export const leadStages:string[];export const visitStages:string[];export function kolkataTime(value:string):Date|null;export function visitTime(value:string,now?:number):Date|null;

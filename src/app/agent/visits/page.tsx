@@ -1,0 +1,1 @@
+import {requireRole} from "@/lib/auth";import {VisitsPage} from "@/components/crm-pages";export const dynamic="force-dynamic";export default async function Page({searchParams}:{searchParams:Promise<{error?:string}>}){return <VisitsPage u={await requireRole("agent")} error={(await searchParams).error}/>}

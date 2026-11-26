@@ -1,0 +1,1 @@
+import {requireRole} from "@/lib/auth";import {LeadsPage} from "@/components/crm-pages";export const dynamic="force-dynamic";export default async function Page({searchParams}:{searchParams:Promise<Record<string,string|undefined>>}){return <LeadsPage u={await requireRole("owner")} query={await searchParams}/>}
