@@ -1,2 +1,2 @@
-# AI integration
-Not configured. Implement manual GLB and panorama first. Future adapters must validate source assets and output formats; asynchronous jobs, status/history, cost, errors, approval and source/accuracy labels are mandatory. Never fabricate generation success. Paid APIs require permission.
+# AI Studio
+Manual upload, review and publish workflow: select property, original inputs, private result, source category, declared AI/tool, notes. Store real import/review history, enforce approval before public visibility, retain original assets and label visualizations. External generation provider, live storage and real AI API are not configured. No paid API or fake generated output. Actual automated provider adapters/webhooks remain pending.

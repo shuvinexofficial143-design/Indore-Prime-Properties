@@ -10,7 +10,7 @@ async function activity(c,org,lead,actor,event,detail){await c.query("INSERT INT
 async function notifyOwners(c,org,kind,message){await c.query("INSERT INTO notifications(organization_id,user_id,kind,message) SELECT organization_id,id,$2,$3 FROM users WHERE organization_id=$1 AND role='owner' AND active",[org,kind,message]);}
 async function notifyUser(c,org,user,kind,message){if(user)await c.query("INSERT INTO notifications(organization_id,user_id,kind,message) VALUES($1,$2,$3,$4)",[org,user,kind,message]);}
 export async function publicSubmit(input,visit=null,user=null){
- const p=leadInput.parse(input);let starts=null,visitors=0,token=null;
+ const p=leadInput.parse(input);let starts=null,visitors=0,token=randomBytes(32).toString("hex");
  if(visit){starts=visitTime(visit.time);visitors=Number(visit.visitors);if(!starts||!Number.isInteger(visitors)||visitors<1||visitors>10)throw Error("Invalid time or visitors");token=randomBytes(32).toString("hex");}
  return tx(async c=>{
  const property=(await c.query(`SELECT p.id,p.organization_id,p.title,p.purpose FROM properties p JOIN organizations o ON o.id=p.organization_id WHERE o.slug='indore-prime-demo' AND o.is_demo AND p.is_demo AND p.status='published' AND p.slug=$1 FOR SHARE OF p`,[p.slug])).rows[0];if(!property||property.purpose!==p.purpose)return {status:"unavailable"};
@@ -23,7 +23,7 @@ export async function publicSubmit(input,visit=null,user=null){
  if(visit){const customer=user?.role==="customer"&&user.organization_id===org?user.id:null;const end=new Date(starts.getTime()+30*60000);
  await c.query(`INSERT INTO site_visits(organization_id,property_id,lead_id,customer_id,agent_id,starts_at,ends_at,visitors,requirements,receipt_hash) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,[org,property.id,lead.id,customer,lead.assigned_agent_id,starts,end,visitors,p.message,hash(token)]);
  await notifyOwners(c,org,"visit_requested","Demo site visit requested for "+property.title);await notifyUser(c,org,lead.assigned_agent_id,"visit_requested","Demo site visit request assigned to your lead.");
- }else{await notifyOwners(c,org,"enquiry","Demo enquiry for "+property.title);await notifyUser(c,org,lead.assigned_agent_id,"enquiry","New enquiry on an assigned demo lead.");}
+ }else{await c.query("INSERT INTO enquiry_receipts(receipt_hash,organization_id,lead_id) VALUES($1,$2,$3)",[hash(token),org,lead.id]);await notifyOwners(c,org,"enquiry","Demo enquiry for "+property.title);await notifyUser(c,org,lead.assigned_agent_id,"enquiry","New enquiry on an assigned demo lead.");}
  return {status:"ok",token};
  });
 }
@@ -64,3 +64,5 @@ export async function updateVisit(actor,id,status,agent,time){if(!valid(id)||!vi
 export async function receipt(token){if(typeof token!=="string"||!(/^[a-f0-9]{64}$/).test(token))return null;return (await db().query("SELECT v.status,v.starts_at,v.ends_at,p.title AS property_title FROM site_visits v JOIN properties p ON p.id=v.property_id AND p.organization_id=v.organization_id WHERE receipt_hash=$1",[hash(token)])).rows[0]??null;}
 export async function notifications(actor){return (await db().query("SELECT id,kind,message,read_at,created_at FROM notifications WHERE organization_id=$1 AND user_id=$2 ORDER BY created_at DESC LIMIT 100",[actor.organization_id,actor.id])).rows;}
 export async function readNotifications(actor){await db().query("UPDATE notifications SET read_at=now() WHERE organization_id=$1 AND user_id=$2 AND read_at IS NULL",[actor.organization_id,actor.id]);}
+
+export async function enquiryReceipt(token){if(typeof token!=="string"||!(/^[a-f0-9]{64}$/).test(token))return null;return (await db().query("SELECT p.title AS property_title,r.created_at FROM enquiry_receipts r JOIN leads l ON l.id=r.lead_id AND l.organization_id=r.organization_id JOIN properties p ON p.id=l.property_id AND p.organization_id=l.organization_id WHERE r.receipt_hash=$1",[hash(token)])).rows[0]??null;}
