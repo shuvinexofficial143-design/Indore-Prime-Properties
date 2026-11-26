@@ -1,0 +1,24 @@
+import {db,databaseConfigured} from "./db.mjs";
+import {properties,filterProperties} from "./catalog.mjs";
+import {propertyInput,uuid} from "./property-input.mjs";
+export const demoSlug="indore-prime-demo";
+export const mapProperty=r=>({id:r.id,slug:r.slug,title:r.title,location:r.location,type:r.property_type,purpose:r.purpose,price:Number(r.price_paise)/100,beds:r.bedrooms,baths:r.bathrooms,area:r.area_sqft,art:["villa","house","tower","office"].includes(r.illustration)?r.illustration:"house",description:r.description,demo:r.is_demo,status:r.status,photoId:r.photo_id??null,modelId:r.model_id??null});
+const publicSelect=`SELECT p.*, (SELECT id FROM property_media m WHERE m.organization_id=p.organization_id AND m.property_id=p.id AND m.kind='photo' AND m.visible ORDER BY sort_order,created_at,id LIMIT 1) AS photo_id,
+(SELECT id FROM property_media m WHERE m.organization_id=p.organization_id AND m.property_id=p.id AND m.kind='model' AND m.visible ORDER BY sort_order,created_at,id LIMIT 1) AS model_id FROM properties p JOIN organizations o ON o.id=p.organization_id WHERE o.slug=$1 AND o.is_demo AND p.is_demo AND p.status='published'`;
+export async function publicProperties(){
+ if(!databaseConfigured())return properties.map(p=>({...p,id:null,status:"published",photoId:null,modelId:null}));
+ return (await db().query(publicSelect+" ORDER BY p.created_at,p.slug LIMIT 500",[demoSlug])).rows.map(mapProperty);
+}
+export async function publicFiltered(filters={}){return filterProperties(filters,await publicProperties());}
+export async function publicProperty(slug){return (await publicProperties()).find(p=>p.slug===slug)??null;}
+export async function ownerProperties(org){return (await db().query("SELECT * FROM properties WHERE organization_id=$1 ORDER BY updated_at DESC,id LIMIT 500",[org])).rows.map(mapProperty);}
+export async function ownerProperty(org,id){if(!uuid.safeParse(id).success)return null;const r=await db().query("SELECT * FROM properties WHERE organization_id=$1 AND id=$2",[org,id]);return r.rows[0]?mapProperty(r.rows[0]):null;}
+export async function saveProperty(org,id,input){
+ const p=propertyInput.parse(input);
+ const values=[org,p.slug,p.title,p.location,p.type,p.purpose,p.price*100,p.beds,p.baths,p.area,p.description,p.art,p.status];
+ if(id){uuid.parse(id);const r=await db().query(`UPDATE properties SET slug=$2,title=$3,location=$4,property_type=$5,purpose=$6,price_paise=$7,bedrooms=$8,bathrooms=$9,area_sqft=$10,description=$11,illustration=$12,status=$13,updated_at=now() WHERE organization_id=$1 AND id=$14 RETURNING id`,[...values,id]);return r.rows[0]?.id??null;}
+ const r=await db().query(`INSERT INTO properties(organization_id,slug,title,location,property_type,purpose,price_paise,bedrooms,bathrooms,area_sqft,description,illustration,status,is_demo) SELECT $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,is_demo FROM organizations WHERE id=$1 RETURNING id`,values);return r.rows[0]?.id??null;
+}
+export async function ownerStatus(org,id,status){uuid.parse(id);if(!["draft","published","archived","sold","rented"].includes(status))throw Error("Invalid status");return (await db().query("UPDATE properties SET status=$3,updated_at=now() WHERE organization_id=$1 AND id=$2 RETURNING id",[org,id,status])).rowCount===1;}
+export async function listMedia(org,id,onlyPublic=false){if(!uuid.safeParse(id).success)return [];return (await db().query("SELECT id,kind,title,mime,bytes,visible,sort_order FROM property_media WHERE organization_id=$1 AND property_id=$2 "+(onlyPublic?"AND visible=true ":"")+"ORDER BY sort_order,created_at,id",[org,id])).rows;}
+export async function publicMedia(id){if(!uuid.safeParse(id).success)return [];return (await db().query("SELECT m.id,m.kind,m.title,m.mime,m.bytes FROM property_media m JOIN properties p ON p.id=m.property_id AND p.organization_id=m.organization_id JOIN organizations o ON o.id=p.organization_id WHERE p.id=$1 AND p.status='published' AND p.is_demo AND o.is_demo AND o.slug=$2 AND m.visible=true ORDER BY m.sort_order,m.created_at,m.id",[id,demoSlug])).rows;}

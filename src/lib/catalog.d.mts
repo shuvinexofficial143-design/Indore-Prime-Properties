@@ -1,0 +1,1 @@
+import type {Property} from "./property-types";export const properties:Property[];export const locations:string[];export const types:string[];export function formatPrice(price:number,purpose:string):string;export function filterProperties(filters?:Record<string,string|undefined>,source?:Property[]):Property[];
