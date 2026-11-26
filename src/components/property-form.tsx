@@ -13,7 +13,7 @@ export function PropertyForm({p}:{p?:Property}){
  <label>Bedrooms<input type="number" name="beds" defaultValue={p?.beds??2} required min={0} max={30}/></label>
  <label>Bathrooms<input type="number" name="baths" defaultValue={p?.baths??2} required min={0} max={30}/></label>
  <label>Area (sq ft)<input type="number" name="area" defaultValue={p?.area||""} required min={1}/></label>
- <label>Status<select name="status" defaultValue={p?.status||"draft"}>{["draft","published","archived","sold","rented"].map(x=><option key={x}>{x}</option>)}</select></label>
+ <label>Status<select aria-label="Status" name="status" defaultValue={p?.status||"draft"}>{["draft","published","archived","sold","rented"].map(x=><option key={x}>{x}</option>)}</select></label>
  <label>Fallback concept art<select name="art" defaultValue={p?.art||"house"}>{["villa","house","tower","office"].map(x=><option key={x}>{x}</option>)}</select></label>
  <label className="full">Description<textarea name="description" defaultValue={p?.description} required minLength={10} maxLength={4000} rows={5}/></label>
  <button className="button" type="submit">Save property</button>
